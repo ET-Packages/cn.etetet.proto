@@ -15,14 +15,14 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>$(SolutionDir)Bin</OutputPath>
+      <OutputPath>./Exe</OutputPath>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <DefineConstants>DOTNET</DefineConstants>
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>$(SolutionDir)Bin</OutputPath>
+      <OutputPath>./Exe</OutputPath>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <DefineConstants>DOTNET</DefineConstants>
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -40,7 +40,7 @@
     
     <ItemGroup>
       <None Update="Template.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
     </ItemGroup>
     
