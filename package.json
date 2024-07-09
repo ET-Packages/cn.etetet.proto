@@ -17,6 +17,6 @@
     "registry": "https://npm.pkg.github.com/@ET-Packages"
   },
   "dependencies": {
-    "cn.etetet.core": ""
+    "cn.etetet.core": "0.0.13"
   }
 }
