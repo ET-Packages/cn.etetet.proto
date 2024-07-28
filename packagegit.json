@@ -1,4 +1,9 @@
 {
 "Id": 12,
-"Name": "Proto"
+"Name": "Proto",
+"ScriptsReferences": {
+  "Model": [
+    "ET.MemoryPack"
+  ]
+}
 }
