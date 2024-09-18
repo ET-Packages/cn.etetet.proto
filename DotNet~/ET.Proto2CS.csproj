@@ -51,7 +51,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\..\cn.etetet.core\DotNet~\ET.Core\ET.Core.csproj" />
+      <ProjectReference Include="..\..\cn.etetet.core\DotNet~\ET.Core.csproj" />
     </ItemGroup>
 
 </Project>
