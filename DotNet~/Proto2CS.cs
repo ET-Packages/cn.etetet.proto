@@ -27,6 +27,7 @@ namespace ET
         private static string clientServerMessagePath;
         private static readonly char[] splitChars = [' ', '\t'];
         private static readonly List<OpcodeInfo> msgOpcode = [];
+        private static List<int> opcodeList = new List<int>();
 
         public static void Proto2CS()
         {
@@ -34,6 +35,7 @@ namespace ET
             MongoHelper.ToJson(1);
             
             msgOpcode.Clear();
+            opcodeList.Clear();
 
             PackagesLock packagesLock = PackageHelper.LoadEtPackagesLock("./");
             PackageInfo protoPackage = packagesLock.dependencies["cn.etetet.proto"];
@@ -226,6 +228,10 @@ namespace ET
             foreach (OpcodeInfo info in msgOpcode)
             {
                 sb.Append($"\t\tpublic const ushort {info.Name} = {info.Opcode};\n");
+                if (opcodeList.Contains(info.Opcode))
+                    Console.WriteLine($"duplicate opcode found {info.Opcode}");
+                else
+                    opcodeList.Add(info.Opcode);
             }
 
             sb.Append("\t}\n");
