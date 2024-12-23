@@ -12,17 +12,7 @@ namespace ET
 
             UnityEngine.Debug.Log(process.StandardOutput.ReadToEnd());
         }
-
-        //快速创建 Proto 文件
-        [MenuItem("Assets/Create/ET/Create Proto")]
-        static void GenerateProto()
-        {
-            ProjectWindowUtil.CreateAssetWithContent(
-                "Temp.proto",
-                "syntax = \"proto3\";\n\npackage ET;\n\n// *************************\n// ******* XXXX *********\n// *************************\n\n\n"
-            );
-        }
-
+        
         public static void Init()
         {
             Run();
