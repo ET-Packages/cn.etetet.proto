@@ -35,7 +35,11 @@ namespace ET.Editor
 
         private void OnEnable()
         {
+#if UNITY_EDITOR_WIN
             delDataPath = Application.dataPath.Replace("Assets", "").Replace("/", "\\");
+#elif UNITY_EDITOR_OSX
+            delDataPath = Application.dataPath.Replace("Assets", "");
+            #endif
             protoConbinePath = this.delDataPath + "Temp";
         
             RefreshDataList();
@@ -212,8 +216,16 @@ namespace ET.Editor
 
         private void CombineProtoOpenByVSCode()
         {
-            string folderPath = protoConbinePath + "\\TmpProto";
-            string subFolderPath = folderPath + "\\";
+            string folderPath = "";
+            string subFolderPath = "";
+            
+#if UNITY_EDITOR_WIN
+            folderPath = protoConbinePath + "\\TmpProto";
+            subFolderPath = folderPath + "\\";
+#elif UNITY_EDITOR_OSX
+            folderPath = protoConbinePath + "/TmpProto";
+            subFolderPath = folderPath + "/";
+#endif
             
             //先移除所有之前的
             DirectoryInfo directoryInfo = new DirectoryInfo(subFolderPath);
@@ -245,6 +257,8 @@ namespace ET.Editor
                     File.Copy(item.fullPath, subFolderPath + item.simpPath, true);
                 }
             }
+            
+            EditorUtility.RevealInFinder(folderPath);
 
             OpenInVSCode(folderPath);
         }
@@ -253,8 +267,16 @@ namespace ET.Editor
         {
             // if (!CloseVSCode()) return;
             
-            string folderPath = protoConbinePath + "\\TmpProto";
-            string subFolderPath = folderPath + "\\";
+            string folderPath = "";
+            string subFolderPath = "";
+            
+#if UNITY_EDITOR_WIN
+            folderPath = protoConbinePath + "\\TmpProto";
+            subFolderPath = folderPath + "\\";
+#elif UNITY_EDITOR_OSX
+            folderPath = protoConbinePath + "/TmpProto";
+            subFolderPath = folderPath + "/";
+#endif
             
             foreach (var item in protoItems)
             {
@@ -294,8 +316,12 @@ namespace ET.Editor
             // }
             foreach (string fullPath in tmpProtoFiles)
             {
-                string[] tmpStrs = fullPath.Split("\\");
-                
+                string[] tmpStrs = null;
+                #if UNITY_EDITOR_WIN
+                tmpStrs = fullPath.Split("\\");
+                #elif UNITY_EDITOR_OSX
+                tmpStrs = fullPath.Split("/");
+                #endif
                 string simpPath = tmpStrs[^1];
                 string name = simpPath.Split(".")[0];
                 string numStr = name.Split("_")[^1];
@@ -340,16 +366,18 @@ namespace ET.Editor
         
         private void OpenInVSCode(string dirPath)
         {
+            Debug.Log($"tackor-----> {dirPath}");
+            
             // 创建一个新的进程启动信息
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = vsCodePath,
                 // 如果需要传递参数，可以在这里添加
                 Arguments = dirPath,
-                UseShellExecute = true, // 允许操作系统使用 shell 来启动进程
-                RedirectStandardOutput = false, // 通常不需要重定向输出
-                RedirectStandardError = false,  // 通常不需要重定向错误
-                CreateNoWindow = false // 是否创建新窗口，取决于你的需求
+                UseShellExecute        = true,   // 允许操作系统使用 shell 来启动进程
+                RedirectStandardOutput = false,  // 通常不需要重定向输出
+                RedirectStandardError  = false,  // 通常不需要重定向错误
+                CreateNoWindow         = false    // 是否创建新窗口，取决于你的需求
             };
 
             // process = Process.Start(startInfo);
