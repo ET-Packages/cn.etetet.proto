@@ -144,6 +144,10 @@ namespace ET.Editor
             {
                 SeprateProtoAndSave();
             }
+            if (GUILayout.Button("Prot2CS", GUILayout.Width(60)))
+            {
+                PackageExecuteMenuItemHelper.ExecuteMenuItem("ET/Proto/Proto2CS");
+            }
             GUILayout.EndHorizontal();
             
             GUILayout.Space(10);
