@@ -25,6 +25,7 @@ namespace ET.Editor
         private string vsCodePath = @"C:\Users\18070\AppData\Local\Programs\Microsoft VS Code\Code.exe";
         private string newVSCodePath = @"C:\Users\18070\AppData\Local\Programs\Microsoft VS Code\Code.exe";
         // private Texture2D bgTexture;
+        private bool togOpenFolder = false;      //是否同时打开文件夹
     
         //数据
         private List<ItemData> protoItems = new List<ItemData>();
@@ -123,6 +124,8 @@ namespace ET.Editor
             EditorGUI.LabelField(rectNormal, this.vsCodePath);
             GUI.Box(new Rect(rectNormal.x-5, rectNormal.y, tmpWidth+10, rectNormal.height), GUIContent.none, EditorStyles.helpBox);
             
+            GUILayout.FlexibleSpace ();
+            
             if (GUILayout.Button("open in vscode", GUILayout.Width(100)))
             {
                 try
@@ -134,7 +137,9 @@ namespace ET.Editor
                     Debug.LogError($"打开VSCode报错, 当前VSCode路径:<{this.vsCodePath}>, 具体错误:{e}");
                 }
             }
+            togOpenFolder = GUILayout.Toggle(togOpenFolder, "");
             
+            GUILayout.Space(10);
             if (GUILayout.Button("save", GUILayout.Width(60)))
             {
                 SeprateProtoAndSave();
@@ -257,8 +262,11 @@ namespace ET.Editor
                     File.Copy(item.fullPath, subFolderPath + item.simpPath, true);
                 }
             }
-            
-            EditorUtility.RevealInFinder(folderPath);
+
+            if (togOpenFolder)
+            {
+                EditorUtility.RevealInFinder(folderPath);
+            }
 
             OpenInVSCode(folderPath);
         }
@@ -284,6 +292,7 @@ namespace ET.Editor
                 if (!File.Exists(tmpFilePath))
                 {
                     Debug.LogError($"路径不存在: {tmpFilePath}");
+                    return;
                 }
                 File.Copy(tmpFilePath, item.fullPath, true);
             }
