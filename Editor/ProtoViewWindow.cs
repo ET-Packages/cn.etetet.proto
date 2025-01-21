@@ -23,7 +23,7 @@ namespace ET.Editor
         private bool lastTogSort = false;
         private Vector2 scrollViewPos;
         private string vsCodePath = @"C:\Users\XXX\AppData\Local\Programs\Microsoft VS Code\Code.exe";
-        private string newVSCodePath = @"C:\Users\XXX\AppData\Local\Programs\Microsoft VS Code\Code.exe";
+        private string newVSCodePath = "";
         // private Texture2D bgTexture;
         private bool togOpenFolder = false;      //是否同时打开文件夹
     
@@ -82,6 +82,9 @@ namespace ET.Editor
             GUIStyle existTxtStyle = new GUIStyle(GUI.skin.FindStyle("label"));
             existTxtStyle.normal.textColor = Color.yellow;
             
+            GUIStyle greenTxtStyle = new GUIStyle(GUI.skin.FindStyle("label"));
+            greenTxtStyle.normal.textColor = Color.green;
+            
             
             GUILayout.Space(5);
             
@@ -116,12 +119,13 @@ namespace ET.Editor
             if (string.IsNullOrEmpty(newVSCodePath))
             {
                 vsCodePath = "点击这里, 设置VSCode路径";
+                EditorGUI.LabelField(rectNormal, this.vsCodePath, greenTxtStyle);
             }
             else
             {
                 vsCodePath = this.newVSCodePath;
+                EditorGUI.LabelField(rectNormal, this.vsCodePath);
             }
-            EditorGUI.LabelField(rectNormal, this.vsCodePath);
             GUI.Box(new Rect(rectNormal.x-5, rectNormal.y, tmpWidth+10, rectNormal.height), GUIContent.none, EditorStyles.helpBox);
             
             GUILayout.FlexibleSpace ();
@@ -134,7 +138,8 @@ namespace ET.Editor
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"打开VSCode报错, 当前VSCode路径:<{this.vsCodePath}>, 具体错误:{e}");
+                    Debug.LogError($"打开VSCode报错, VSCode路径错误, 请先点击 <{this.vsCodePath}> 设置VSCode路径");
+                    // Debug.LogError($"打开VSCode报错, VSCode路径错误:<{this.vsCodePath}>, 具体错误:{e}");
                 }
             }
             togOpenFolder = GUILayout.Toggle(togOpenFolder, "");
@@ -146,7 +151,7 @@ namespace ET.Editor
             }
             if (GUILayout.Button("Prot2CS", GUILayout.Width(60)))
             {
-                ExecuteMenuItem("ET/Proto/Proto2CS");
+                EditorApplication.ExecuteMenuItem("ET/Proto/Proto2CS");
             }
             GUILayout.EndHorizontal();
             
@@ -424,18 +429,6 @@ namespace ET.Editor
         //
         //     return false;
         // }
-        
-        public static void ExecuteMenuItem(string menuItem)
-        {
-            try
-            {
-                EditorApplication.ExecuteMenuItem(menuItem);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"执行错误 {menuItem} 请检查 {e.Message}");
-            }
-        }
         
         private bool ProtoStyleIsError(string input)
         {
