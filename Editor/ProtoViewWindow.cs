@@ -22,8 +22,8 @@ namespace ET.Editor
         private bool togSort = false;
         private bool lastTogSort = false;
         private Vector2 scrollViewPos;
-        private string vsCodePath = @"C:\Users\18070\AppData\Local\Programs\Microsoft VS Code\Code.exe";
-        private string newVSCodePath = @"C:\Users\18070\AppData\Local\Programs\Microsoft VS Code\Code.exe";
+        private string vsCodePath = @"C:\Users\XXX\AppData\Local\Programs\Microsoft VS Code\Code.exe";
+        private string newVSCodePath = @"C:\Users\XXX\AppData\Local\Programs\Microsoft VS Code\Code.exe";
         // private Texture2D bgTexture;
         private bool togOpenFolder = false;      //是否同时打开文件夹
     
@@ -146,7 +146,7 @@ namespace ET.Editor
             }
             if (GUILayout.Button("Prot2CS", GUILayout.Width(60)))
             {
-                PackageExecuteMenuItemHelper.ExecuteMenuItem("ET/Proto/Proto2CS");
+                ExecuteMenuItem("ET/Proto/Proto2CS");
             }
             GUILayout.EndHorizontal();
             
@@ -424,6 +424,18 @@ namespace ET.Editor
         //
         //     return false;
         // }
+        
+        public static void ExecuteMenuItem(string menuItem)
+        {
+            try
+            {
+                EditorApplication.ExecuteMenuItem(menuItem);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"执行错误 {menuItem} 请检查 {e.Message}");
+            }
+        }
         
         private bool ProtoStyleIsError(string input)
         {
