@@ -146,7 +146,7 @@ namespace ET.Editor
             }
             if (GUILayout.Button("Prot2CS", GUILayout.Width(60)))
             {
-                PackageExecuteMenuItemHelper.ExecuteMenuItem("ET/Proto/Proto2CS");
+                EditorApplication.ExecuteMenuItem("ET/Proto/Proto2CS");
             }
             GUILayout.EndHorizontal();
             
