@@ -1,1 +1,3 @@
 obj/
+CodeMode/*
+.DS_Store
