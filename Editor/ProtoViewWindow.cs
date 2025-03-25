@@ -136,9 +136,9 @@ namespace ET.Editor
                 {
                     CombineProtoOpenByVSCode();
                 }
-                catch (Exception e)
+                catch (System.Exception e)
                 {
-                    Debug.LogError($"打开VSCode报错, VSCode路径错误, 请先点击 <{this.vsCodePath}> 设置VSCode路径");
+                    Debug.LogError($"打开VSCode报错, VSCode路径错误, 请先点击 <{this.vsCodePath}> 设置VSCode路径 {e}");
                     // Debug.LogError($"打开VSCode报错, VSCode路径错误:<{this.vsCodePath}>, 具体错误:{e}");
                 }
             }
